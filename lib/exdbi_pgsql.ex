@@ -1,4 +1,7 @@
 defrecord DBI.PostgreSQL, conn: nil do
+  @moduledoc """
+   This module allows to connect to a PostgreSQL database
+  """
 
   alias :pgsql, as: P
 
