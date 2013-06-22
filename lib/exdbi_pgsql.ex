@@ -12,7 +12,7 @@ defrecord DBI.PostgreSQL, conn: nil do
                               {:username, String.t} |
                               {:password, String.t} |
                               {:database, String.t} |
-                              {:port, non_neg_integer} |
+                              {:port, :inet.port_number} |
                               {:ssl, boolean | :required} |
                               {:ssl_opts, [:ssl.ssl_option]} |
                               {:timeout, timeout}
