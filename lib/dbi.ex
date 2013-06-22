@@ -14,12 +14,10 @@ defimpl DBI, for: DBI.PostgreSQL do
     parsed_statement = DBI.Statement.parse(statement)
     {expr, bindings_list} =
     Enum.reduce(parsed_statement, {"", []}, fn
-      (item, {expr, bindings_list}) ->
-        if is_atom(item) do
-          {expr <> "$#{length(bindings_list) + 1}", [bindings[item]|bindings_list]}
-        else
-          {expr <> item, bindings_list}
-        end
+      item, {expr, bindings_list} when is_atom(item) ->
+        {expr <> "$#{length(bindings_list) + 1}", [bindings[item]|bindings_list]}
+      item, {expr, bindings_list} ->
+        {expr <> item, bindings_list}
     end)
     bindings_list = Enum.reverse bindings_list
     process_result(P.equery(conn, expr, bindings_list))
